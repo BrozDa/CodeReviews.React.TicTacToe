@@ -1,7 +1,14 @@
+import Square from "./Square"
+import "./css/style.css"
+
 function App() {
 
   return (
-    <div>App jsx</div>
+    <>
+    <Square />
+    <Square />
+    <Square />
+    </>
   )
 }
 
