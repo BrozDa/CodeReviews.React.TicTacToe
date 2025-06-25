@@ -1,13 +1,11 @@
-import Square from "./Square"
-import "./css/style.css"
+import Board from "./Board"
+
 
 function App() {
 
   return (
     <>
-    <Square />
-    <Square />
-    <Square />
+    <Board />
     </>
   )
 }
