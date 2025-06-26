@@ -7,11 +7,14 @@ function Game() {
   const [xIsNext, setXIsNext] = useState(true)
   const [history, setHistory] = useState([Array(9).fill(null)])
   const [currentMove, setCurrentMove ] = useState(0);
+  const [sortAsc, setSortAsc] = useState(true)
   const currentSquares = history[currentMove];
 
   function handlePlay(nextSquares)
   {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    
+    const nextHistory =  [...history.slice(0, currentMove + 1), nextSquares];
+
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
     setXIsNext(!xIsNext);
@@ -22,10 +25,16 @@ function Game() {
   }
 
   const moves = history.map((squares, move) => {
+
+    if(!sortAsc){
+      move = history.length-1 - move;
+    }
+
     const isCurrentMove = move === currentMove;
     const description = (move === 0) 
-                      ? 'Go to move #' + move 
-                      : 'Go to game start';
+                      ? 'Go to game start' 
+                      : 'Go to move #' + move;
+
     return (
       <li key={move}>
          {isCurrentMove
@@ -34,6 +43,7 @@ function Game() {
         }
       </li>
     )
+
   });
 
   return (
@@ -42,6 +52,7 @@ function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
       </div>
       <div className="game-info">
+        <button onClick={() => setSortAsc(!sortAsc)}>Rearrange History</button>
         <ol>{moves}</ol>
       </div>
     </div>
