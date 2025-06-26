@@ -1,22 +1,23 @@
 import {useEffect, useState} from 'react'
 import Square from './Square'
 
-function Board() {
+function Board({xIsNext,squares,onPlay}) {
 
-  const [xIsNext, setXIsNext] = useState(true);
-  const [squares, setSquares] = useState(Array(9).fill(null));
   const [status, setStatus] = useState('Next player: ' + (xIsNext ? 'X' : 'O'))
 
-  function handleClick(i){
-    const nextSquares = squares.slice();
+    function handleClick(i) {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    nextSquares[i] = xIsNext ? "X" : "O";
-    
-    setXIsNext(!xIsNext);
-    setSquares(nextSquares);
+    const nextSquares = squares.slice();
+    if (xIsNext) {
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = "O";
+    }
+    onPlay(nextSquares);
   }
+
   function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
