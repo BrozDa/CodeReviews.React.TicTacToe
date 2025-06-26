@@ -1,13 +1,9 @@
 import React, {useState} from 'react'
 
-function Square({value, onSquareClick}) {
-
-  const [text, setText] = useState(value)
-
-  
+function Square({value, onSquareClick, bgCol}) {
 
   return (
-    <button className='square' onClick={onSquareClick}>
+    <button className='square' onClick={onSquareClick} style={{backgroundColor:bgCol}}>
       {value}
     </button>
   )

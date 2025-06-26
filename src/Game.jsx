@@ -8,6 +8,8 @@ function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)])
   const [currentMove, setCurrentMove ] = useState(0);
   const [sortAsc, setSortAsc] = useState(true)
+  const [bgColors, setBgColors] = useState(Array(9).fill("#fff"));
+
   const currentSquares = history[currentMove];
 
   function handlePlay(nextSquares)
@@ -22,12 +24,13 @@ function Game() {
   function jumpTo(nextMove){
     setCurrentMove(nextMove);
     setXIsNext(nextMove % 2 === 0);
+    setBgColors(Array(9).fill("#fff"));
   }
 
   const moves = history.map((squares, move) => {
 
     if(!sortAsc){
-      move = history.length-1 - move;
+      move = history.length-1 -move;
     }
 
     const isCurrentMove = move === currentMove;
@@ -49,11 +52,20 @@ function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+        <Board 
+          xIsNext={xIsNext} 
+          squares={currentSquares} 
+          onPlay={handlePlay}
+          bgColors={bgColors}
+          setBgColors={setBgColors}
+        />
       </div>
       <div className="game-info">
         <button onClick={() => setSortAsc(!sortAsc)}>Rearrange History</button>
         <ol>{moves}</ol>
+      </div>
+      <div>
+        {currentSquares.map( i => i ? i : "_")}
       </div>
     </div>
   )
