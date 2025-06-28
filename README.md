@@ -1,12 +1,13 @@
-# React + Vite
+# React Tic-Tac-Toe project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Completed based on React tutorial: [React Tic-Tac-Toe](https://react.dev/learn/tutorial-tic-tac-toe)
 
-Currently, two official plugins are available:
+## Tutorial code differences
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Components moved to respective files
+2. Implemented all additional practices:
+    - For the current move only, show “You are at move #…” instead of a button.
+    - Rewrite Board to use two loops to make the squares instead of hardcoding them.
+    - Add a toggle button that lets you sort the moves in either ascending or descending order.
+    - When someone wins, highlight the three squares that caused the win (and when no one wins, display a message about the result being a draw).
+    - Display the location for each move in the format (row, col) in the move history list.
