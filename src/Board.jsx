@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import Square from './Square'
 
-function Board({xIsNext,squares,onPlay, bgColors, setBgColors}) {
+function Board({xIsNext,squares,onPlay, bgColors, setBgColors,setLatestMove}) {
 
   const [status, setStatus] = useState('Next player: ' + (xIsNext ? 'X' : 'O'))
   function handleClick(i) {
@@ -11,7 +11,11 @@ function Board({xIsNext,squares,onPlay, bgColors, setBgColors}) {
 
   const nextSquares = squares.slice();
   nextSquares[i] = xIsNext ? "X" : "O";
-  onPlay(nextSquares);
+  let latestMove = {
+    xCoord:i%3,
+    yCoord: Math.floor(i/3)
+  }
+  onPlay(nextSquares,latestMove);
 }
   
 

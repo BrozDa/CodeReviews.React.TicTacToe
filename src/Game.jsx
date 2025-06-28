@@ -9,10 +9,11 @@ function Game() {
   const [currentMove, setCurrentMove ] = useState(0);
   const [sortAsc, setSortAsc] = useState(true)
   const [bgColors, setBgColors] = useState(Array(9).fill("#fff"));
+  const [moveHistory, setMoveHistory] = useState([]);
 
   const currentSquares = history[currentMove];
 
-  function handlePlay(nextSquares)
+  function handlePlay(nextSquares, latestMove)
   {
     
     const nextHistory =  [...history.slice(0, currentMove + 1), nextSquares];
@@ -20,35 +21,33 @@ function Game() {
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
     setXIsNext(!xIsNext);
+    setMoveHistory([...moveHistory, latestMove]);
   }
   function jumpTo(nextMove){
     setCurrentMove(nextMove);
     setXIsNext(nextMove % 2 === 0);
     setBgColors(Array(9).fill("#fff"));
   }
+  const movesPlus = history.map((_, move) => {
+  const displayMove = sortAsc ? move : history.length - 1 - move;
+  const isCurrentMove = displayMove === currentMove;
 
-  const moves = history.map((squares, move) => {
+  const moveInfo = moveHistory[move];
+  const coords = moveInfo ? ` [${moveInfo.xCoord}/${moveInfo.yCoord}]` : "";
 
-    if(!sortAsc){
-      move = history.length-1 -move;
-    }
+  const description = (move === 0) 
+    ? 'Go to game start' 
+    : `Go to move #${move}${coords}`;
 
-    const isCurrentMove = move === currentMove;
-    const description = (move === 0) 
-                      ? 'Go to game start' 
-                      : 'Go to move #' + move;
-
-    return (
-      <li key={move}>
-         {isCurrentMove
-          ? <span >{`You are on move: ${move}`}</span> 
-          : <button onClick={() => jumpTo(move)}>{description}</button>
-        }
-      </li>
-    )
-
-  });
-
+  return (
+    <li key={displayMove}>
+      {isCurrentMove
+        ? <span>{`You are on move: ${displayMove}`}</span> 
+        : <button onClick={() => jumpTo(displayMove)}>{description}</button>
+      }
+    </li>
+  );
+});
   return (
     <div className="game">
       <div className="game-board">
@@ -62,10 +61,7 @@ function Game() {
       </div>
       <div className="game-info">
         <button onClick={() => setSortAsc(!sortAsc)}>Rearrange History</button>
-        <ol>{moves}</ol>
-      </div>
-      <div>
-        {currentSquares.map( i => i ? i : "_")}
+        <ol>{movesPlus}</ol>
       </div>
     </div>
   )
